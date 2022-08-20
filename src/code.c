@@ -3,6 +3,7 @@
 #include "refresh_state.h"
 
 void draw();
+void zeroing();
 const int width = 80;
 const int height = 25;
 const int rocket1_x = 10;
@@ -14,24 +15,29 @@ int ball_y = 13;
 int count1 = 0;
 int count2 = 0;
 int main() {
+    printf("For moving rackets: Left Player 'A' and 'Z' Right player 'K' and 'M'...\n");
+    printf("Lets play THE GAME! Press any key to continue...");
+    getchar();
     while (count1 != 21 && count2 != 21) {
-        draw();
+        draw_field();
         getchar();
         switch (refresh(0, 0)) {
             case -1:
                 count1++;
+                reset_field();
                 break;
             case  1:
                 count2++;
+                reset_field();
                 break;
         }
     }
-    draw();
+    draw_field(); // for count 21
     printf("The game is finished player number %d WIN", count1 > count2 ? 1 : 2);
     return 0;
 }
 
-void draw() {
+void draw_field() {
     for (int i = 0; i <= height; i++) {
         for (int j = 0; j <= width; j++) {
             if (i == 0 || i == height || j == 0 || j == width)
@@ -57,3 +63,9 @@ void draw() {
     }
 }
 
+void reset_field() {
+    ball_x = 40;
+    ball_y = 13;
+    rocket1_y = 12;
+    rocket2_y = 12;
+}
