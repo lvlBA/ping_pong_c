@@ -2,32 +2,35 @@
 
 extern int width;
 extern int height;
-extern int rocket1_x
-int rocket1_y
-extern int rocket2_x
-int rocket2_y
-int ball_x
-int ball_y
+extern int rocket1_x;
+extern int rocket1_y;
+extern int rocket2_x;
+extern int rocket2_y;
+extern int ball_x;
+extern int ball_y;
 // ball_direction : 0 - top-right, 1 - down-right, 2 - down-left, 3 - top-left
 int ball_direction = 0;
+void move_ball();
 
-int refresh(int 1r_offset, int 2r_offset) {
+int refresh(int r1_offset, int r2_offset) {
     // first rocket
-    rocket1_x += 1r_offset;
-    if (rocket1_x == 0 || rocket1_x + 2 == height) rocket1_x -= 1r_offset;
+    rocket1_x += r1_offset;
+    if (rocket1_x == 0 || rocket1_x + 2 == height) rocket1_x -= r1_offset;
 
     // second rocket
-    rocket2_x += 2r_offset;
-    if (rocket2_x == 0 || rocket2_x + 2 == height) rocket2_x -= 2r_offset;
+    rocket2_x += r2_offset;
+    if (rocket2_x == 0 || rocket2_x + 2 == height) rocket2_x -= r2_offset;
 
     // check end of round
     switch (ball_direction) {
         case 0:
         case 1:
             if (ball_x + 1 == width) return -1;
+            break;
         case 2:
         case 3:
             if (ball_x - 1 == 0) return 1;
+            break;
     }
 
     move_ball();
