@@ -2,7 +2,9 @@
 #include <unistd.h>
 #include "refresh_state.h"
 
-void draw();
+void draw_field();
+void reset_field();
+int handle_turns();
 const int width = 80;
 const int height = 25;
 const int rocket1_x = 10;
@@ -15,24 +17,29 @@ int count1 = 0;
 int count2 = 0;
 int main() {
     char left_choice, right_choice;
+    printf("For moving rackets: Left Player 'A' and 'Z' Right player 'K' and 'M'...\n");
+    printf("Lets play THE GAME! Press any key to continue...");
+
     while (count1 != 21 && count2 != 21) {
-        draw();
         scanf("%c%c", &left_choice, &right_choice);
+        draw_field();
         switch (handle_turns(left_choice, right_choice)) {
             case -1:
                 count1++;
+                reset_field();
                 break;
             case  1:
                 count2++;
+                reset_field();
                 break;
         }
     }
-    draw();
+    draw_field(); // for count 21
     printf("The game is finished player number %d WIN", count1 > count2 ? 1 : 2);
     return 0;
 }
 
-void draw() {
+void draw_field() {
     for (int i = 0; i <= height; i++) {
         for (int j = 0; j <= width; j++) {
             if (i == 0 || i == height || j == 0 || j == width)
@@ -74,5 +81,11 @@ int handle_turns(char a, char b) {
     if (a == 'm' || b == 'm'){
         var2 = 1;
     }
-    return refresh( var1, var2);
+    return refresh(var1, var2);
+
+void reset_field() {
+    ball_x = 40;
+    ball_y = 13;
+    rocket1_y = 12;
+    rocket2_y = 12;
 }
