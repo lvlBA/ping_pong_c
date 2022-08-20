@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-extern int width;
-extern int height;
-extern int rocket1_x;
+extern const int width;
+extern const int height;
+extern const int rocket1_x;
 extern int rocket1_y;
-extern int rocket2_x;
+extern const int rocket2_x;
 extern int rocket2_y;
 extern int ball_x;
 extern int ball_y;
@@ -14,12 +14,12 @@ void move_ball();
 
 int refresh(int r1_offset, int r2_offset) {
     // first rocket
-    rocket1_x += r1_offset;
-    if (rocket1_x == 0 || rocket1_x + 2 == height) rocket1_x -= r1_offset;
+    rocket1_y += r1_offset;
+    if (rocket1_y == 0 || rocket1_y + 2 == height) rocket1_y -= r1_offset;
 
     // second rocket
-    rocket2_x += r2_offset;
-    if (rocket2_x == 0 || rocket2_x + 2 == height) rocket2_x -= r2_offset;
+    rocket2_y += r2_offset;
+    if (rocket2_y == 0 || rocket2_y + 2 == height) rocket2_y -= r2_offset;
 
     // check end of round
     switch (ball_direction) {
@@ -47,9 +47,7 @@ void move_ball() {
             if (ball_x == rocket2_x && ball_y >= rocket2_y && ball_y <= rocket2_y + 2) ball_direction = 3;
             else if (ball_y == 0) ball_direction = 1;
             else
-                break;
-            ball_x = old_x;
-            ball_y = old_y;
+                return;
             break;
         // down-right
         case 1:
@@ -58,9 +56,7 @@ void move_ball() {
             if (ball_x == rocket2_x && ball_y >= rocket2_y && ball_y <= rocket2_y + 2) ball_direction = 2;
             else if (ball_y == height) ball_direction = 0;
             else
-                break;
-            ball_x = old_x;
-            ball_y = old_y;
+                return;
             break;
         // down-left
         case 2:
@@ -69,20 +65,19 @@ void move_ball() {
             if (ball_x == rocket1_x && ball_y >= rocket1_y && ball_y <= rocket1_y + 2) ball_direction = 1;
             else if (ball_y == height) ball_direction = 3;
             else
-                break;
-            ball_x = old_x;
-            ball_y = old_y;
+                return;
             break;
         // top-left
         case 3:
             ball_x -= 1;
             ball_y -= 1;
             if (ball_x == rocket1_x && ball_y >= rocket1_y && ball_y <= rocket1_y + 2) ball_direction = 0;
-            else if (ball_y == height) ball_direction = 2;
+            else if (ball_y == 0) ball_direction = 2;
             else
-                break;
-            ball_x = old_x;
-            ball_y = old_y;
+                return;
             break;
     }
+    ball_x = old_x;
+    ball_y = old_y;
+    move_ball();
 }
