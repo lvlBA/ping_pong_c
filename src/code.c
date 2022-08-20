@@ -14,10 +14,11 @@ int ball_y = 13;
 int count1 = 0;
 int count2 = 0;
 int main() {
+    char left_choice, right_choice;
     while (count1 != 21 && count2 != 21) {
         draw();
-        getchar();
-        switch (refresh(0, 0)) {
+        scanf("%c%c", &left_choice, &right_choice);
+        switch (handle_turns(left_choice, right_choice)) {
             case -1:
                 count1++;
                 break;
@@ -57,3 +58,21 @@ void draw() {
     }
 }
 
+int handle_turns(char a, char b) {
+    int var1 = 0;
+    int var2 = 0;
+
+    if (a == 'a' || b == 'a'){
+        var1 = -1;
+    }
+    if (a == 'z' || b == 'z'){
+        var1 = 1;
+    }
+    if (a == 'k' || b == 'k'){
+        var2 = -1;
+    }
+    if (a == 'm' || b == 'm'){
+        var2 = 1;
+    }
+    return refresh( var1, var2);
+}
