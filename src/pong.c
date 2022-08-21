@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <unistd.h>
 #include "refresh_state.h"
 
 void draw_field();
@@ -68,7 +67,6 @@ void draw_field() {
 int handle_turns(char a, char b) {
     int var1 = 0;
     int var2 = 0;
-
     if (a == 'a' || b == 'a') {
         var1 = -1;
     }
