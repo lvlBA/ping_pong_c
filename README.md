@@ -5,8 +5,7 @@ The russian version of the task can be found in the repository.
 ***== Quest received. Develop an src/pong.c program for a two-player game, 
 similar to Pong. To display the graphics, only use ASCII characters (with output 
 to the terminal). You need to implement the step-by-step 
-version using only the material of the course studied 
-so far and the standard library.***
+version using only the standard library.***
 
 * ***Keys***:
 
